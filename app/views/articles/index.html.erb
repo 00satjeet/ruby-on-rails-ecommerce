@@ -1,0 +1,25 @@
+<h3 class="d-ib">Listing articles</h3>
+
+<%= link_to 'New article', new_article_path, {:class=>"ml-t fl-r"} %>
+
+<% @articles.each do |article| %>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<%= link_to article.title, article_path(article) %>
+		</div>
+		<div class="panel-body">
+			<%= truncate(strip_tags(article.text), :length => 500) %>
+		</div>
+		<div class="panel-footer">
+			<div class="text-right">
+				<%= link_to 'Edit', edit_article_path(article), 
+					class: "text-danger" %>&nbsp; | &nbsp; 
+				<%= link_to 'Delete', article_path(article),
+					method: :delete,
+					class: "text-danger",
+					data: { confirm: 'Are you sure?' } %>
+			</div>
+		</div>
+	</div>
+<% end %>

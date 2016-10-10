@@ -1,0 +1,76 @@
+<div class="container wave-box-wrapper">
+	<div class="wave-box"></div>
+	<%= form_for :user, url: {action: "update"} do |f| %>
+		<div class="col-md-10 col-md-offset-1">
+			<div class="panel panel-default">
+				<div class="panel-heading">My Account</div>
+				<div class="panel-body">
+					<% if @user.errors.any? %>
+						<div id="error_explanation">
+							<h2>
+								<%= pluralize(@user.errors.count, "error") %> prohibited
+								your account from being updated:
+							</h2>
+							<ul>
+							<% @user.errors.full_messages.each do |msg| %>
+								<li><%= msg %></li>
+								<% end %>
+							</ul>
+						</div>
+					<% end %>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">Email<span class="text-red">*</span>:</label>
+						<div class="col-md-6">
+							<%= f.text_field :email, :class => "form-control", :disabled => "disabled" %>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">Old Password<span class="text-red">*</span>:</label>
+						<div class="col-md-6">
+							<%= f.password_field :old_password, :class => "form-control" %>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">New Password<span class="text-red">*</span>:</label>
+						<div class="col-md-6">
+							<%= f.password_field :password, :class => "form-control" %>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">Confirm New password<span class="text-red">*</span>:</label>
+						<div class="col-md-6">
+							<%= f.password_field :password_confirm, :class => "form-control" %>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">First Name<span class="text-red">*</span>:</label>
+						<div class="col-md-6">
+							<%= f.text_field :first_name, :class => "form-control" %>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">Last Name<span class="text-red">*</span>:</label>
+						<div class="col-md-6">
+							<%= f.text_field :last_name, :class => "form-control" %>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">Phone Number:</label>
+						<div class="col-md-6">
+							<%= f.text_field :phone_number, :class => "form-control" %>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label class="col-md-4 control-label text-right">About Me:</label>
+						<div class="col-md-6">
+							<%= f.text_area :about_me, :class => "form-control", :id => "ck-editor-area" %>
+						</div>
+					</div>
+					<div class="col-md-6 col-md-offset-4">
+						<%= f.submit "Update", :class => "btn btn-success" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>

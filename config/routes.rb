@@ -11,4 +11,6 @@ Rails.application.routes.draw do
 
 	get '/user/register' => 'users#new'
 	post '/user/register' => 'users#create'
+	get '/user/account' => 'users#edit'
+	post '/user/account' => 'users#update'
 end

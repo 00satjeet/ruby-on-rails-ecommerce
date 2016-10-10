@@ -8,6 +8,7 @@ class User
 	field :phone_number, type: String
 	field :email, type: String
 	field :password_digest, type: String
+	field :about_me, type: String
 	
 	has_secure_password
 	

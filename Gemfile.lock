@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
@@ -39,6 +39,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (7.1.2)
+    bcrypt (3.1.11-x64-mingw32)
     bson (4.1.1)
     builder (3.2.2)
     coffee-rails (4.2.1)
@@ -149,6 +150,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  bcrypt (~> 3.1.11)
   byebug
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)

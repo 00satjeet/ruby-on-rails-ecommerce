@@ -475,6 +475,8 @@ var app = {
 						window.location.href = '/user/account';
 					}
 					
+					$('.create-account input[type="submit"]').prop("disabled", false).removeAttr("data-disable-with", false);
+					
 					wave_box('off');
 				}
             });
@@ -494,6 +496,8 @@ var app = {
 					if(response.status == 1){
 						Lobibox.notify('success', {msg: response.message, size: 'mini', sound: false});
 					}
+					
+					$('.update-account input[type="submit"]').prop("disabled", false).removeAttr("data-disable-with", false);
 					
 					wave_box('off');
 				}

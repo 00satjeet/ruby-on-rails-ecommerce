@@ -12,4 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require lobibox.min
+//= require imageviewer.min
+//= require jquery.form
+//= require global
+//= require app
 //= require_tree .

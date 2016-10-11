@@ -1,0 +1,52 @@
+<div class="container">
+	<p class="ml-b"><span class="glyphicon glyphicon-chevron-left"></span> <%= link_to "All Products", products_path, class: "ml-b text-success" %></p>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Edit Product
+		</div>
+		<div class="panel-body">
+			<%= form_for @product, :html => {:class => "update-product"} do |f| %>
+				<div class="col-md-8">
+					<div class="form-group">
+						<%= f.label :name %>*
+						<%= f.text_field :name, :class => "form-control required" %>
+					</div>
+					<div class="form-group">
+						<%= f.label :content %>
+						<%= f.text_area :content, :class => "form-control", :id => "ck-editor-area" %>
+					</div>
+					<div class="form-group">
+						<%= f.label :excerpt, "Short Description" %>
+						<%= f.text_area :excerpt, :class => "form-control", rows: "8" %>
+					</div>
+					<div class = "form-group">
+						<%= f.label :images, "Select Product Images" %>
+						<%= f.file_field :images, :class => "form-control", accept: "image/*", :multiple => true %>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<%= f.label :price %>*
+						<div class="input-group">
+							<div class="input-group-addon">$</div>
+							<%= f.text_field :price, :class => "form-control required", placeholder: "Amount" %>
+						</div>
+					</div>
+					<div class="form-group">
+						<%= f.label :status %>*
+						<select class="form-control" name="product[status]">
+							<option value="1">Active</option>
+							<option value="0">Inactive</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<%= f.label :files, "On Stock" %>*
+						<%= f.number_field :quantity, :class => "form-control required" %>
+					</div>
+					<input type="submit" class="btn btn-success" value="Update" />
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

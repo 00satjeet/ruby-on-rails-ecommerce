@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-	# Creates standard resource for CRUD operations
+	# Creates standard resource for products CRUD operations
+	resources :products
+
+	# Creates standard resource for articles CRUD operations
 	resources :articles
 	
 	# Specify the page to load when index of the site is accessed

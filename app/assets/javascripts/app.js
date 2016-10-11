@@ -249,8 +249,6 @@ var app = {
 						if(response.message){
 							Lobibox.notify('success', {msg: response.message, size: 'mini', sound: false});
 						}
-						
-						socket.emit('send', { message: $('.update-product').serializeObject() } );
 					}
 					if(response.images){
 						$('.image-input').val('');
@@ -280,7 +278,7 @@ var app = {
 					
 					$('input.required').each(function(index) {
 						if($(this).val() == ''){
-							Lobibox.notify('error', {msg: 'Please fill-up the required fields', size: 'mini', sound: false});
+							Lobibox.notify('error', {msg: 'Please fill-up all required fields', size: 'mini', sound: false});
 							proceed = false;
 							return false;
 						}
@@ -292,10 +290,10 @@ var app = {
 					update_ckeditor_instances();
 				},
 				success: function(response, textStatus, xhr, form) {
-					if(response == 0){
+					if(response.status == 0){
 						Lobibox.notify('error', {msg: 'Failed to create the product, please try again', size: 'mini', sound: false});
 					} else {
-						window.location.href = '/user/products/edit/' + response + '?status=created';
+						window.location.href = '/products/'  + response.message.$oid + '/edit?status=created';
 					}
 				}
             });
@@ -518,7 +516,6 @@ var app = {
 		 */
 		this.init = function() {
 			this.set_ckeditor();
-			// this.set_datepicker();
 		}
 		
 		/**
@@ -527,17 +524,6 @@ var app = {
 		this.set_ckeditor = function() {
 			if($('#ck-editor-area').length){
 				load_ckeditor('ck-editor-area', 300);
-			}
-		}
-		
-		/**
-		 * Load CKEditor plugin
-		 */
-		this.set_datepicker = function() {
-			if('.datepicker'){
-				$('.datepicker').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss'
-                });
 			}
 		}
 	}

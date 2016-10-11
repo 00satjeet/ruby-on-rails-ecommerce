@@ -1,6 +1,5 @@
 class User
 	include Mongoid::Document
-	include ActiveModel::Validations
 	include ActiveModel::SecurePassword
 	
 	field :first_name, type: String

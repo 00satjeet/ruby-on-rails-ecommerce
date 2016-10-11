@@ -1,7 +1,7 @@
 class User
 	include Mongoid::Document
+	include ActiveModel::Validations
 	include ActiveModel::SecurePassword
-	include ActiveRecord::FinderMethods
 	
 	field :first_name, type: String
 	field :last_name, type: String

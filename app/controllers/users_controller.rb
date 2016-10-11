@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
 	
 	def new
-		# Pass the @user variable, which contains errors, to the view: "articles/new"  
-		@user = User.new
     end
 
     def create
@@ -17,12 +15,15 @@ class UsersController < ApplicationController
 		@user = User.new(@params)
 		
 		if @user.save
-			session[:user_id] = @user.id
-			redirect_to '/'
+			session[:user_id] = @user.id # Login the user
+			respond_to do |format|
+				format.json { render json: {:status => 1} }
+			end
 		else
-			# Use same request during form submit to redirect user back to the form 
-			# This will call for the function "new" and it passes @user variable containing the errors
-			render "new"
+			# Return errors from model into readable messages.
+			respond_to do |format|
+				format.json { render json: {:status => 0, :message => @user.errors.full_messages.to_sentence} }
+			end
 		end
     end
 	
@@ -40,13 +41,17 @@ class UsersController < ApplicationController
 			:phone_number,
 			:about_me
 		)
-		@user = User.find(current_user._id)
 
+		@user = User.find(current_user._id)
 		if @user.update(@params)
-			redirect_to '/user/account'
+			respond_to do |format|
+				format.json { render json: {:status => 1, :message => "Account sucessfully updated"} }
+			end
 		else
-			render "edit"
+			# Return errors from model into readable messages.
+			respond_to do |format|
+				format.json { render json: {:status => 0, :message => @user.errors.full_messages.to_sentence} }
+			end
 		end
 	end
-	
 end

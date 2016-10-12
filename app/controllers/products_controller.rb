@@ -1,8 +1,14 @@
 class ProductsController < ApplicationController
+	require 'pp'
+	
 	def index
 	end
 
 	def new
+		# Redirect if not logged-in
+		if ! current_user
+			redirect_to '/'
+		end
 	end
 
 	def create
@@ -29,7 +35,12 @@ class ProductsController < ApplicationController
 	end
 
 	def edit
-		@product = Product.find(params[:id])
+		@product = Product.where(:_id => params[:id]).first
+		
+		# Redirect if not logged in or user is not author of the product
+		if ! current_user || current_user._id != @product.author
+			redirect_to '/'
+		end
 	end
 
 	def update
@@ -43,6 +54,7 @@ class ProductsController < ApplicationController
 			:images
 		)
 		@product = Product.find(params[:id])
+		@product.assign_attributes({:author => current_user._id}) # Assign current user as the author of the product
 		
 		if @product.update(@params)
 			respond_to do |format|

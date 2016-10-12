@@ -8,6 +8,7 @@ class Product
 	field :status, type: Boolean
 	field :quantity, type: Integer
 	field :images, type: String
+	field :author, type: BSON::ObjectId
 	
 	validates :name, presence: true
 	validates :price, presence: true

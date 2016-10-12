@@ -7,7 +7,7 @@ class Product
 	field :price, type: Float
 	field :status, type: Boolean
 	field :quantity, type: Integer
-	field :images, type: String
+	field :images, type: Array
 	field :author, type: BSON::ObjectId
 	
 	validates :name, presence: true

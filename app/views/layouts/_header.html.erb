@@ -27,7 +27,14 @@
 						<li><%= link_to 'Blogs', controller: 'articles' %></li>
 						<li><%= link_to 'Products', controller: 'products' %></li>
 						<% if current_user %>
-							<li><a href="/user/account">Account</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dashboard <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="/user/account">Account</a></li>
+									<li><a href="/products/user">Manage Products</a></li>
+									<li><a href="/products/new">New Product</a></li>
+								</ul>
+							</li>
 							<li><a href="/user/logout">Logout</a></li>
 						<% else %>
 							<li><a href="/user/register">Register</a></li>

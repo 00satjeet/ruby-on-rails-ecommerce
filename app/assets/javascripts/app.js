@@ -101,7 +101,7 @@ var app = {
 		this.ajax_get_user_items_pagination = function(page, th_name, th_sort){
 			
 			if($(".pagination-container").length > 0 && $(".products-view-user").length > 0){
-				$(".pagination-container").html('<img src="/images/loading.gif" class="ml-tb" />');
+				$(".pagination-container").html('<img src="/loading.gif" class="ml-tb" />');
 				
 				var post_data = {
 					page: page,
@@ -184,7 +184,7 @@ var app = {
 		this.ajax_get_all_items_pagination = function(page, order_by_name, order_by_sort){
 			
 			if($(".pagination-container").length > 0 && $('.products-view-all').length > 0 ){
-				$(".pagination-container").html('<img src="app/assets/images/loading.gif" class="ml-tb" />');
+				$(".pagination-container").html('<img src="/loading.gif" class="ml-tb" />');
 				
 				var post_data = {
 					page: page,
@@ -231,7 +231,7 @@ var app = {
 		 */
 		this.update_post = function(){
 			$('.update-product').ajaxForm({
-				beforeSerialize: function() {
+				beforeSerialize: function() {					
 					update_ckeditor_instances();
 					wave_box('on');
 				},
@@ -256,7 +256,7 @@ var app = {
 								'<div class = "col-sm-3">' + 
 									'<span class="unset-image glyphicon glyphicon-remove text-danger lead m-0 c-p" id="unset-' + image + '" title="Delete image"></span>' + 
 									'<span class="set-featured-image glyphicon glyphicon-star-empty text-warning lead m-0 c-p" id="featured-' + image + '" title="Set as featured image"></span>' + 
-									'<img src = "/images/uploads/' + image + '" class = "img-thumbnail img-responsive" />' + 
+									'<img src = "/uploads/' + image + '" class = "img-thumbnail img-responsive" />' + 
 								'</div>'
 							);
 						});

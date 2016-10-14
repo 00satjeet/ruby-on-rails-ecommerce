@@ -9,6 +9,7 @@ class Product
 	field :quantity, type: Integer
 	field :images, type: Array
 	field :author, type: BSON::ObjectId
+	field :featured_image, type: String
 	
 	validates :name, presence: true
 	validates :price, presence: true

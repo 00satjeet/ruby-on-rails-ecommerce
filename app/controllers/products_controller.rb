@@ -234,10 +234,13 @@ class ProductsController < ApplicationController
 		)
 		@product = Product.find(params[:id])
 		@product.assign_attributes({:author => current_user._id}) # Assign current user as the author of the product
+		@posted_images = []
 		
-		# Upload images then save to database
-		if ! params[:product]['images'].nil?
-			@image_data = []
+		# Check if there are any images posted
+		if params[:product]['images'][0] != ""
+			# Upload images then save to database
+			
+			@existing_images = @product.images ? @product.images : []
 			params[:product]['images'].each do |a|
 				# Generate random name for the image file
 				@random_string = (0...50).map { ('a'..'z').to_a[rand(26)] }.join + File.extname(a.original_filename)
@@ -245,17 +248,25 @@ class ProductsController < ApplicationController
 					# Write data to public/uploads folder
 					file.write(a.read)
 				end
-				# Add image name to @image_data object
-				@image_data << @random_string
+				# Add image name to @posted_images object
+				@posted_images << @random_string
 			end
 			
 			# Insert images to database as array.
-			@product.assign_attributes(:images => @image_data)
+			@product.assign_attributes(:images => @posted_images + @existing_images)
 		end
 		
 		if @product.update(@params)
 			respond_to do |format|
-				format.json { render json: {:status => 1, :message => "Product successfully updated"} }
+				@main_response = {:status => 1, :message => "Product successfully updated"}
+				
+				if @posted_images.blank?
+					format.json { render json: @main_response }
+				else
+					# Merge our images hash to to main response
+					format.json { render json: @main_response.merge({:images => @posted_images}) }
+				end
+				
 			end
 		else
 			# Return errors from model into readable messages.

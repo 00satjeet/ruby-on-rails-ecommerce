@@ -200,6 +200,7 @@ class ProductsController < ApplicationController
 			:quantity
 		)
 		@product = Product.new(@params)
+		@product.assign_attributes({:author => current_user._id, :date => Time.now.strftime("%d/%m/%Y %H:%M")})
 		
 		if @product.save
 			respond_to do |format|

@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+	
+	# Other products rotues
+	post '/products' => 'products#index'
+	get '/products/user' => 'products#user'
+	post '/products/user' => 'products#user'
+	
 	# Creates standard resource for products CRUD operations
 	resources :products
-	# Include other products rotues
-	post '/products/all' => 'products#all'
-
+	
 	# Creates standard resource for articles CRUD operations
 	resources :articles
 	

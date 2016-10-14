@@ -1,17 +1,15 @@
 class ProductsController < ApplicationController
+	
 	require 'pp'
+	include ApplicationHelper
 	
 	def index
-	end
-	
-	def all
 		if params[:product]
 			# Parse received product JSON object
 			@post_data = JSON.parse(params[:product])
 			
 			@pagination_content = ""
 			@page_number = @post_data["page"] ? @post_data["page"].to_i : 1
-			
 			@page = @page_number
 			@name = @post_data["name"]
 			@sort = @post_data["sort"]
@@ -77,7 +75,7 @@ class ProductsController < ApplicationController
 									</div>
 								</div> 
 								<div class='panel-footer'>
-									<a href='#{product_url(post)}' class='btn btn-primary btn-block'>View Item</a>
+									<a href='#{product_path(post)}' class='btn btn-primary btn-block'>View Item</a>
 								</div>
 							</div>
 						</div>
@@ -87,80 +85,104 @@ class ProductsController < ApplicationController
 				@pagination_content += "<p class='bg-danger p-d'>No results</p>"
 			end
 			
-			# Optional, wrap the output into a container
-			@pagination_content = "<div class='cvf-universal-content'>#{@pagination_content}</div><br class = 'clear' />";
-
-			@no_of_paginations = (@count.fdiv(@per_page)).ceil
-			
-			if @cur_page >= 7 
-				@start_loop = @cur_page - 3
-				if @no_of_paginations > @cur_page + 3
-					@end_loop = @cur_page + 3
-				elsif @cur_page <= @no_of_paginations && @cur_page > @no_of_paginations - 6
-					@start_loop = @no_of_paginations - 6
-					@end_loop = @no_of_paginations
-				else
-					@end_loop = @no_of_paginations
-				end
-			else
-				@start_loop = 1
-				if @no_of_paginations > 7
-					@end_loop = 7
-				else
-					@end_loop = @no_of_paginations
-				end
-			end
-
-			# Pagination Buttons logic     
-			@pagination_nav += "
-				<div class='pagination-container'>
-					<ul>"
-
-			if @first_btn && @cur_page > 1
-				@pagination_nav += "<li p='1' class='active'>First</li>"
-			elsif @first_btn
-				@pagination_nav += "<li p='1' class='inactive'>First</li>"
-			end
-
-			if @previous_btn && @cur_page > 1
-				@pre = @cur_page - 1
-				@pagination_nav += "<li p='#{@pre}' class='active'>Previous</li>"
-			elsif @previous_btn
-				@pagination_nav += "<li class='inactive'>Previous</li>"
-			end
-			
-			for @i in @start_loop..@end_loop do
-				if @cur_page == @i
-					@pagination_nav += "<li p='#{@i}' class = 'selected'>#{@i}</li>"
-				else
-					@pagination_nav += "<li p='#{@i}' class='active'>#{@i}</li>"
-				end
-			end
-
-			if @next_btn && @cur_page < @no_of_paginations
-				@nex = @cur_page + 1
-				@pagination_nav += "<li p='#{@nex}' class='active'>Next</li>"
-			elsif @next_btn
-				@pagination_nav += "<li class='inactive'>Next</li>"
-			end
-
-			if @last_btn && @cur_page < @no_of_paginations
-				@pagination_nav += "<li p='#{@no_of_paginations}' class='active'>Last</li>"
-			elsif @last_btn
-				@pagination_nav += "<li p='#{@no_of_paginations}' class='inactive'>Last</li>"
-			end
-
-			@pagination_nav = "#{@pagination_nav}
-					</ul>
-				</div>"
-			
 			respond_to do |format|
-				format.json { render json: {:content => @pagination_content, :navigation => @pagination_nav} }
+				format.json { render json: {
+					:content => @pagination_content, 
+					:navigation => nagivation_list(@count, @per_page, @cur_page)
+				} }
 			end
 			
 		end
 	end
-
+	
+	def user
+		if params[:product]
+			# Parse received product JSON object
+			@post_data = JSON.parse(params[:product])
+			
+			@pagination_content = ""
+			@page_number = @post_data["page"] ? @post_data["page"].to_i : 1
+			@page = @page_number
+			@name = @post_data["th_name"]
+			@sort = @post_data["th_sort"]
+			@search = @post_data["search"]
+			@max = @post_data["max"].to_i
+			
+			@cur_page = @page
+			@page -= 1
+			@per_page = @max # Set the number of results to display
+			@previous_btn = true
+			@next_btn = true
+			@first_btn = true
+			@last_btn = true
+			@start = @page * @per_page
+			
+			@pagination_content = ""
+			@pagination_nav = ""
+			
+			# If search keyword is not empty, we include a query for searching 
+			# the "content" or "name" fields in the database for any matched strings.
+			if @search.present?
+				@search_by_name = { :name => /.*#{@search}.*/ }
+				@search_by_content = { :content => /.*#{@search}.*/ }
+				@all_posts = Product
+					.where(author: current_user._id)
+					.any_of(@search_by_name)
+					.any_of(@search_by_content)
+					.limit(@per_page)
+					.offset(@start)
+					.order(@name + " " + @sort)
+				@count = Product
+					.where(author: current_user._id)
+					.any_of(@search_by_name)
+					.any_of(@search_by_content)
+					.length
+			else
+				@all_posts = Product
+					.where(author: current_user._id)
+					.limit(@per_page)
+					.offset(@start)
+					.order(@name + " " + @sort)
+				@count = Product
+					.where(author: current_user._id)
+					.length
+			end
+			
+			if @all_posts.present?
+				@all_posts.each do |post, value|
+					@pagination_content += "
+						<tr>
+							<td></td>
+							<td>#{post.name}</td>
+							<td>#{post.price}</td>
+							<td>#{post.status}</td>
+							<td></td>
+							<td>#{post.quantity}</td>
+							<td>
+								<a href='#{edit_product_path(post)}' class='text-success'>
+									<span class='glyphicon glyphicon-pencil' title='Edit'></span>
+								</a> &nbsp; &nbsp;
+								<a href='#' class='text-danger delete-product' item_id=''>
+									<span class='glyphicon glyphicon-remove' title='Delete'></span>
+								</a>
+							</td>
+						</tr>
+					"
+				end
+			else
+				@pagination_content += "<tr><td colspan='7' class='bg-danger p-d'>No results</td></tr>"
+			end
+			
+			respond_to do |format|
+				format.json { render json: {
+					:content => @pagination_content, 
+					:navigation => nagivation_list(@count, @per_page, @cur_page)
+				} }
+			end
+			
+		end
+	end
+	
 	def new
 		# Redirect if not logged-in
 		if ! current_user

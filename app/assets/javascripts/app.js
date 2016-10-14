@@ -113,16 +113,15 @@ var app = {
 				
 				$('form.post-list input').val(JSON.stringify(post_data));
 				
-				var data = {
-					action: "demo_load_my_posts",
-					data: JSON.parse($('form.post-list input').val())
-				};
+				var data = JSON.parse($('form.post-list input').val())
 				
 				$.ajax({
-					url: '/user/products/view',
+					url: '/products/user',
 					type: 'POST',
-					contentType: 'application/json',
-					data: JSON.stringify(data),
+					data: {
+						authenticity_token: $('input[name="authenticity_token"]').val(),
+						product: JSON.stringify(data)
+					},
 					success: function (response) {
 						
 						if($(".pagination-container").html(response.content)){
@@ -200,7 +199,7 @@ var app = {
 				var data = JSON.parse($('form.post-list input').val());
 				
 				$.ajax({
-					url: 'products/all',
+					url: '/products',
 					type: 'POST',
 					data: {
 						authenticity_token: $('input[name="authenticity_token"]').val(),

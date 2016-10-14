@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 	# Creates standard resource for products CRUD operations
 	resources :products
+	# Include other products rotues
+	post '/products/all' => 'products#all'
 
 	# Creates standard resource for articles CRUD operations
 	resources :articles

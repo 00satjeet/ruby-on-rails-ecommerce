@@ -4,12 +4,12 @@
 /* Pagination Styles */
 .pagination-container  { margin-top: 15px; }
 .pagination-container ul { margin: 0; padding: 0; }
-.pagination-container ul li { display: inline; background: #FFF; color: black; }
-.pagination-container ul li.active a:hover { background: #1E8CBE; color: white; text-decoration: none; }
-.pagination-container ul li.inactive { background: #d0d0d0; }
+.pagination-container ul li { display: inline; background: #FFF; color: #000; }
+.pagination-container ul li.active:hover { background: #1E8CBE; color: white; text-decoration: none; }
+.pagination-container ul li.inactive { background: #d0d0d0; color: #000 }
 .pagination-container ul li.selected { background: #1E8CBE; color: white; }
-.pagination-container ul li a { color: #1e8cbe; }
-.pagination-container ul li a, .pagination-container ul li.inactive, .pagination-container ul li.selected { margin: 3px; padding: 4px 8px; }
+.pagination-container ul li { color: #1e8cbe; }
+.pagination-container ul li, .pagination-container ul li.inactive, .pagination-container ul li.selected { margin: 3px; padding: 4px 8px; }
 
 /* imageviewer CSS */
 .imageviewer {width: 100%; position: relative; height: 450px; background: #2c3e50; }

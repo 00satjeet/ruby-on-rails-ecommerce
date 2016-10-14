@@ -1,2 +1,40 @@
-<h1>Products#index</h1>
-<p>Find me in app/views/products/index.html.erb</p>
+<div class="container products-view-all">
+	<form class = "post-list">
+		<input type = "hidden" value = "" />
+	</form>
+	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+	<div class="clearfix">
+		<article class="navbar-form navbar-left p-0 m-0 ml-b">
+			<div class="form-group">
+				<label>Per Page: </label>
+				<select class="form-control post_max m-b">
+					<option value="8">8</option>
+					<option value="16">16</option>
+					<option value="30">30</option>
+				</select>
+				<label>Search Keyword: </label>
+				<input type="text" class="form-control post_search_text m-b" placeholder="Enter a keyword" />
+			</div>
+			<div class="form-group">
+				<label>Order By: </label>
+				<select class="form-control post_name m-b">
+					<option value="name">Title</option>
+					<option value="price">Price</option>
+					<option value="quantity">Quantity</option>
+				</select>
+				<select class="form-control post_sort m-b">
+					<option value="ASC">ASC</option>
+					<option value="DESC">DESC</option>
+				</select>
+			</div>
+			<input type = "submit" value = "Filter" class = "btn btn-primary post_search_submit m-b" />
+		</article>
+	</div>
+	
+	<hr />
+	
+	<div class="clearfix">
+		<div class="pagination-container clearfix"></div>
+		<div class="pagination-nav"></div>
+	</div>
+</div>

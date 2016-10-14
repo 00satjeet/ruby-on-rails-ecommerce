@@ -23,6 +23,30 @@
 					<div class = "form-group">
 						<%= f.label :images, "Select Product Images" %>
 						<%= f.file_field :images, :class => "form-control", accept: "image/*", :multiple => true %>
+					
+						<hr />
+						
+						<div class = "clearfix m-t images-section">
+							<% if @product.images.present? %>
+								<% @product.images.each_with_index do |image, index| %>
+									<div class = "col-sm-3">
+										<span class="unset-image glyphicon glyphicon-remove text-danger lead m-0 c-p" id="unset-<%= image %>" title="Delete image"></span>
+										<% if (defined?(@product.featured_image)) && @product.featured_image == image %>
+											<span class="set-featured-image glyphicon glyphicon-star lead m-0 c-p" title="Set as featured image" id="featured-<%= image %>" style="color: #E4C317"></span>
+										<% else %>
+											<span class="set-featured-image glyphicon glyphicon-star-empty lead m-0 c-p" title="Set as featured image" id="featured-<%= image %>"></span>
+										<% end %>
+										<img src = "<%= asset_path("") %>/uploads/<%= image %>" class = "img-thumbnail img-responsive" />
+									</div>
+									
+									<% if (index + 1) % 4 == 0 %>
+										<div class = "clearfix"></div>
+									<% end %>
+								<% end %>
+							<% else %>
+								<p class = "alert alert-danger no-item-images">No images found</p>
+							<% end %>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4">

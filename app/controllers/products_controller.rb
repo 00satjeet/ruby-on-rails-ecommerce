@@ -20,8 +20,7 @@ class ProductsController < ApplicationController
 			
 			@cur_page = @page
 			@page -= 1
-			# Set the number of results to display
-			@per_page = @max
+			@per_page = @max # Set the number of results to display
 			@previous_btn = true
 			@next_btn = true
 			@first_btn = true

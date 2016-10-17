@@ -2,8 +2,11 @@ class ProductsController < ApplicationController
 	
 	require 'pp'
 	include ApplicationHelper
-	
+		
 	def index
+	end
+	
+	def all
 		if params[:product]
 			# Parse received product JSON object
 			@post_data = JSON.parse(params[:product])
@@ -152,7 +155,7 @@ class ProductsController < ApplicationController
 				@all_posts.each do |post, value|
 					@pagination_content += "
 						<tr>
-							<td></td>
+							<td><img src='/uploads/#{post.featured_image}' width='100' /></td>
 							<td>#{post.name}</td>
 							<td>#{post.price}</td>
 							<td>#{post.status}</td>
@@ -274,6 +277,20 @@ class ProductsController < ApplicationController
 			respond_to do |format|
 				format.json { render json: {:status => 0, :message => @product.errors.full_messages.to_sentence} }
 			end
+		end
+	end
+	
+	def set_featured_image
+		@product = Product.find(params[:item_id])
+		
+		if( @product.update(:featured_image => params[:image]) )
+			@json_message = {:status => 1, :message => "Image successfully set as featured image"}
+		else
+			@json_message = {:status => 0, :message => "Set featured image failed, please try again"}
+		end
+		
+		respond_to do |format|
+			format.json { render json: @json_message }
 		end
 	end
 

@@ -199,7 +199,7 @@ var app = {
 				var data = JSON.parse($('form.post-list input').val());
 				
 				$.ajax({
-					url: '/products',
+					url: '/products/all',
 					type: 'POST',
 					data: {
 						authenticity_token: $('input[name="authenticity_token"]').val(),
@@ -378,25 +378,22 @@ var app = {
 					
 				} else {
 					$.ajax({
-						url: '/user/products/image/set-featured',
+						url: '/products/set-featured-image',
 						type: 'POST',
 						data: {
-							'action': 'set-featured-image',
-							'item_id': $('.item-edit').attr('id').split('-')[1],
+							'authenticity_token': $('input[name="authenticity_token_external"]').val(),
+							'item_id': $('.update-product').attr('id').split('_')[2],
 							'image': image_featured_id
 						},
-						datatype: 'JSON',
 						success: function (response) {
 							if(response.status == 1){
-								if($('.images-section').find('span.glyphicon-star').switchClass('glyphicon-star', 'glyphicon-star-empty').removeAttr('style')){
-									$(_this).switchClass('glyphicon-star-empty', 'glyphicon-star').css('color', '#E4C317');
+								if($('.images-section').find('span.glyphicon-star').addClass('glyphicon-star-empty').removeClass('glyphicon-star').removeAttr('style')){
+									$(_this).addClass('glyphicon-star').removeClass('glyphicon-star-empty').css('color', '#E4C317');
 									Lobibox.notify('success', {msg: response.message, size: 'mini', sound: false});
 								}
 							} else {
 								Lobibox.notify('error', {msg: response.message, size: 'mini', sound: false});
 							}
-							
-							socket.emit('send', { message: { featured: image_featured_id, id: $('.item-edit').attr('id').split('-')[1] } } );
 							
 							wave_box('off');
 						}

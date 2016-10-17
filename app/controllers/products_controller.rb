@@ -68,7 +68,7 @@ class ProductsController < ApplicationController
 										<div class='list-group-item b-0 b-t'>
 											<i class='fa fa-calendar-o fa-2x pull-left ml-r'></i>
 											<p class='list-group-item-text'>Price</p>
-											<h4 class='list-group-item-heading'>$#{post.price}</h4>
+											<h4 class='list-group-item-heading'>$#{'%.2f' % post.price}</h4>
 										</div>
 										<div class='list-group-item b-0 b-t'>
 											<i class='fa fa-calendar fa-2x pull-left ml-r'></i>
@@ -157,7 +157,7 @@ class ProductsController < ApplicationController
 						<tr>
 							<td><img src='/uploads/#{post.featured_image}' width='100' /></td>
 							<td>#{post.name}</td>
-							<td>#{post.price}</td>
+							<td>$#{'%.2f' % post.price}</td>
 							<td>#{post.status}</td>
 							<td>#{post.date}</td>
 							<td>#{post.quantity}</td>

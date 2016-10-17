@@ -29,7 +29,7 @@
 				Product Details
 			</div>
 			<div class="panel-body">
-				<h2 class="text-danger m-0 ml-b">$<%= @product.price %> <small>only</small></h2>
+				<h2 class="text-danger m-0 ml-b">$<%= number_with_precision(@product.price, :precision => 2) %> <small>only</small></h2>
 				
 				<div class="clearfix">
 					<div class="col-md-6">

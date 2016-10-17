@@ -341,11 +341,11 @@ var app = {
 				var parent_element = $(this).parent();
 				
 				$.ajax({
-					url: '/user/products/image/unset',
+					url: '/products/unset-image',
 					type: 'POST',
 					data: {
-						'action': 'unset-image',
-						'item_id': $('.item-edit').attr('id').split('-')[1],
+						'authenticity_token': $('input[name="authenticity_token_external"]').val(),
+						'item_id': $('.update-product').attr('id').split('_')[2],
 						'image': this.id.split('-')[1]
 					},
 					success: function (response) {

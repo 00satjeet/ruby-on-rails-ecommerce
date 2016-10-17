@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 	get '/products/user' => 'products#user'
 	post '/products/user' => 'products#user'
 	post '/products/set-featured-image' => 'products#set_featured_image'
+	post '/products/unset-image' => 'products#unset_image'
 	
 	# Creates standard resource for products CRUD operations
 	resources :products

@@ -283,10 +283,35 @@ class ProductsController < ApplicationController
 	def set_featured_image
 		@product = Product.find(params[:item_id])
 		
+		# Upserts featured image
 		if( @product.update(:featured_image => params[:image]) )
 			@json_message = {:status => 1, :message => "Image successfully set as featured image"}
 		else
 			@json_message = {:status => 0, :message => "Set featured image failed, please try again"}
+		end
+		
+		respond_to do |format|
+			format.json { render json: @json_message }
+		end
+	end
+	
+	def unset_image
+		@product = Product.find(params[:item_id])
+		# Convert images object to array
+		@image_array = @product.images.to_a
+		# Unset posted image from current array of images
+		@image_array.delete_at @image_array.index params[:image]
+		
+		# Path to file
+		@filepath_to_delete = Rails.root.join('public', 'uploads') + params[:image]
+		# Image delete from storage if file exists
+		File.delete(@filepath_to_delete) if File.exist?(@filepath_to_delete)
+		
+		# Check if image data update was successfull 
+		if( @product.update() )
+			@json_message = {:status => 1, :message => "Image successfully deleted"}
+		else
+			@json_message = {:status => 0, :message => "Delete image failed, please try again"}
 		end
 		
 		respond_to do |format|

@@ -512,6 +512,7 @@ var app = {
 		 */
 		this.init = function() {
 			this.set_ckeditor();
+			this.parallax_banner();
 		}
 		
 		/**
@@ -521,6 +522,18 @@ var app = {
 			if($('#ck-editor-area').length){
 				load_ckeditor('ck-editor-area', 300);
 			}
+		}
+		
+		this.parallax_banner = function() {
+			var parallax = document.querySelectorAll(".parallax");
+			var speed = 0.5;
+			window.onscroll = function(){
+				[].slice.call(parallax).forEach(function(el,i){
+					var windowYOffset = window.pageYOffset;
+					var elBackgrounPos = "50% " + (windowYOffset * speed) + "px";
+					el.style.backgroundPosition = elBackgrounPos;
+				});
+			};
 		}
 	}
 }

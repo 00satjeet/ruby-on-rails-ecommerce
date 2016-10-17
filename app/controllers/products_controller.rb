@@ -159,13 +159,13 @@ class ProductsController < ApplicationController
 							<td>#{post.name}</td>
 							<td>#{post.price}</td>
 							<td>#{post.status}</td>
-							<td></td>
+							<td>#{post.date}</td>
 							<td>#{post.quantity}</td>
 							<td>
 								<a href='#{edit_product_path(post)}' class='text-success'>
 									<span class='glyphicon glyphicon-pencil' title='Edit'></span>
 								</a> &nbsp; &nbsp;
-								<a href='#' class='text-danger delete-product' item_id=''>
+								<a href='#' class='text-danger delete-product' item_id='#{post._id}'>
 									<span class='glyphicon glyphicon-remove' title='Delete'></span>
 								</a>
 							</td>
@@ -308,7 +308,7 @@ class ProductsController < ApplicationController
 		File.delete(@filepath_to_delete) if File.exist?(@filepath_to_delete)
 		
 		# Check if image data update was successfull 
-		if( @product.update() )
+		if( @product.update )
 			@json_message = {:status => 1, :message => "Image successfully deleted"}
 		else
 			@json_message = {:status => 0, :message => "Delete image failed, please try again"}
@@ -320,6 +320,28 @@ class ProductsController < ApplicationController
 	end
 
 	def destroy
+		# Product.destroy(params[:item_id])
+		@product = Product.find(params[:item_id])
+		
+		# Delete all images 
+		if( ! @product.images.blank? )
+			@product.images.each do |image|
+				# Path to file
+				@filepath_to_delete = Rails.root.join('public', 'uploads') + image
+				# Image delete from storage if file exists
+				File.delete(@filepath_to_delete) if File.exist?(@filepath_to_delete)
+			end
+		end
+		
+		if( @product.destroy )
+			@json_message = {:status => 1, :message => "Deleted Successfully"}
+		else
+			@json_message = {:status => 0, :message => "Delete failed, please try again"}
+		end
+		
+		respond_to do |format|
+			format.json { render json: @json_message }
+		end
 	end
 
 	def show

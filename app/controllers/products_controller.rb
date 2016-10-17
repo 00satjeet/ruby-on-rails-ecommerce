@@ -61,8 +61,8 @@ class ProductsController < ApplicationController
 							<div class='panel panel-default'>
 								<div class='panel-heading'>#{post.name}</div>
 								<div class='panel-body p-0 p-b'>
-									<a href='products-single.php?item=57c913bc4534e0640d00002a'>
-										<img src='img/uploads/nWq7KBn9g9fvWNckEa7D.jpg' width='100%' class='img-responsive'>
+									<a href='#{product_path(post)}'>
+										<img src='/uploads/#{post.featured_image}' width='100%' class='img-responsive'>
 									</a>
 									<div class='list-group m-0'>
 										<div class='list-group-item b-0 b-t'>
@@ -345,5 +345,13 @@ class ProductsController < ApplicationController
 	end
 
 	def show
+		@product = Product.find(params[:id])
+		@product_images = []
+		
+		if( ! @product.images.blank? )
+			@product.images.each do |image|
+				@product_images += ['small'	=> request.base_url + '/uploads/' + image, 'big' => request.base_url + '/uploads/' + image]
+			end
+		end
 	end
 end

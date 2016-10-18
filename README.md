@@ -17,17 +17,17 @@ This simple e-commerce application demonstrates CRUD operations using mongoDB an
 ### Possible Installation issues:
 
 1. If you are experiencing problems with SQLite3, follow instructions here: https://github.com/hwding/sqlite3-ruby-win, If still not working, and you are getting errors similar to bellow:
-	* `require’: cannot load such file — sqlite3/sqlite3_native (LoadError)
+	`require: cannot load such file — sqlite3/sqlite3_native (LoadError)`
 	- Solution 1:
 		1. Go to your rails app then open gemfile.lock
 		2. Then look for the line “sqlite3” and change its version to the version you have installed in your computer.
 		3. Then run bundle install
 	- Solution 2:
 		1. Go to C:\Ruby23-x64\lib\ruby\gems\2.3.0\specifications
-		2. Look for: sqlite3-1.3.7.gemspec file nad open it.
+		2. Look for: sqlite3-1.3.7.gemspec file then open it.
 		3. Change s.require_paths=[“lib”] to s.require_paths= [“lib/sqlite3_native”]
 2. If you’re getting error related to Bcrypt like the one bellow, follow the tutorial I created here: http://carlofontanos.com/setting-up-bcrypt-for-rails-on-windows/ 
-	* C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/activesupport-4.0.0/lib/active_support/depen dencies.rb:228:in `require’: 126: The specified module could not be found. – C :/Ruby23-x64/lib/ruby/gems/2.3.0/gems/bcrypt-ruby-3.1.11-x64-mingw32/lib/bcrypt_ext.so (LoadError)
+	`C:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/activesupport-4.0.0/lib/active_support/depen dencies.rb:228:in `require’: 126: The specified module could not be found. – C :/Ruby23-x64/lib/ruby/gems/2.3.0/gems/bcrypt-ruby-3.1.11-x64-mingw32/lib/bcrypt_ext.so (LoadError)`
 3. If the problem you are experiencing is not listed above – I suggest you get help on Stackoverflow.
 
 ## Current Versions

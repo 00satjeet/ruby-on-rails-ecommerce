@@ -45,9 +45,9 @@ This simple e-commerce application demonstrates CRUD operations using mongoDB an
 - Manage Products
 - Product List
 - Single Product View
-- Contribution guidelines
 
-### If you are a developer and you would like to contribute to this project, please follow my guidelines bellow:
+## Contribution guidelines
+If you are a developer and you would like to contribute to this project, please follow my guidelines bellow:
 - ALWAYS start a new branch before making changes to the codes
 - Pull requests directly to the master branch will be ignored!
 - Use a git client, preferably Source Tree or you can use git commands from your terminal, your choice!

@@ -244,6 +244,9 @@ class ProductsController < ApplicationController
 		if params[:product]['images'][0] != ""
 			# Upload images then save to database
 			
+			@uploads_path = Rails.root.join('public', 'uploads')
+			FileUtils.mkdir_p(@uploads_path) unless File.directory?(@uploads_path)
+			 
 			@existing_images = @product.images ? @product.images : []
 			params[:product]['images'].each do |a|
 				# Generate random name for the image file
